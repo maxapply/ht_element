@@ -41,58 +41,62 @@
   export default {
     data() {
       return {
-        menu:[
-            {
-                path:'/',
-                name:'home',
-                label:'首页',
-                icon:'s-home',
-                url:'Home/Home'
-            },
-            {
-                path:'/mall',
-                name:'mall',
-                label:'商品管理',
-                icon:'video-play',
-                url:'MallManage/MallManage'
-            },
-            {
-                path:'/user',
-                name:'user',
-                label:'用户管理',
-                icon:'user',
-                url:'userManage/userManage'
-            },
-            {
-                label:'其他',
-                icon:'location',
-                children:[{
-                    path:'/pageOne',
-                    name:'pageOne',
-                    label:'页面1',
-                    icon:'setting',
-                    url:'other/pageOne'
-                },{  
-                    path:'/pageTwo',
-                    name:'pageTwo',
-                    label:'页面2',
-                    icon:'setting',
-                    url:'other/pageTwo'
-                }]
+        // menu:[
+        //     {
+        //         path:'/',
+        //         name:'home',
+        //         label:'首页',
+        //         icon:'s-home',
+        //         url:'Home/Home'
+        //     },
+        //     {
+        //         path:'/mall',
+        //         name:'mall',
+        //         label:'商品管理',
+        //         icon:'video-play',
+        //         url:'MallManage/MallManage'
+        //     },
+        //     {
+        //         path:'/user',
+        //         name:'user',
+        //         label:'用户管理',
+        //         icon:'user',
+        //         url:'userManage/userManage'
+        //     },
+        //     {
+        //         label:'其他',
+        //         icon:'location',
+        //         children:[{
+        //             path:'/pageOne',
+        //             name:'pageOne',
+        //             label:'页面1',
+        //             icon:'setting',
+        //             url:'other/pageOne'
+        //         },{  
+        //             path:'/pageTwo',
+        //             name:'pageTwo',
+        //             label:'页面2',
+        //             icon:'setting',
+        //             url:'other/pageTwo'
+        //         }]
 
-            }
-        ]
+        //     }
+        // ]
+        menu:[]
       };
     },
     computed:{
         noChildren() {
-            return this.menu.filter(item=>item =!item.children)
+            return this.asyncMenu.filter(item=>item =!item.children)
         },
         hasChildren(){
-            return this.menu.filter(item=> item =item.children)
+            return this.asyncMenu.filter(item=> item =item.children)
         },
         isCollapse(){
             return this.$store.state.tab.isCollapse
+        },
+        asyncMenu(){
+          return this.$store.state.tab.menu
         }
 
     },
@@ -104,12 +108,12 @@
         console.log(key, keyPath);
       },
       clickMenu(item){
-        //   console.log(this.$route.path);
           this.$router.push({
               name:item.name
           })
           this.$store.commit('selectMenu',item)
-      }
+      },
+ 
     }
   }
 </script>

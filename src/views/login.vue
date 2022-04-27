@@ -14,13 +14,15 @@
 </template>
 
 <script>
+import Mock from 'mockjs'
+import {getMenu}from '@/api/data'
 export default({
     name:'Login',
     data(){
         return {
             form:{
-                username:'',
-                password:''
+                username:'admin',
+                password:'admin'
             },
             rules:{
                 username:[
@@ -45,7 +47,17 @@ export default({
     },
     methods:{
         onSubmit(){
-
+            getMenu(this.form).then(res=>{
+                if(res.data.code===20000){
+                    this.$store.commit('clearMenu')
+                    this.$store.commit('setMenu',res.data.data.menu)
+                    this.$store.commit('setToken',res.data.data.token)
+                    this.$store.commit('addMenu',this.$router)
+                    this.$router.push({name:'home'})
+                }else {
+                    this.$message.warn(res.data.message)
+                }
+            })
         }
     }
 })
